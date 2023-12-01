@@ -1,0 +1,18 @@
+const digits = "1234567890"
+
+const is_digit = (char) => {
+    return digits.contains(char)
+}
+
+const range = (start, end) => {
+    if (start <= end) {
+        return start..end
+    }
+
+    var ls = []
+    for (end+1..start+1, i, v) {
+        ls.insert(v, 0)
+    }
+
+    return ls
+}

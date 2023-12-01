@@ -1,0 +1,39 @@
+import io
+import [] : string
+import [] : functional
+import [range, is_digit] : "../utils/helpers"
+
+const input = io.readf("input.txt").split("\n")
+
+const get_calibration_sum = (input) => {
+    var calibrations = []
+
+    for (input, index, row) {
+        var first_digit;
+        var last_digit;
+
+        const chars = row.chars()
+        
+        for (chars, j, char) {
+            if (is_digit(char)) {
+                first_digit = char
+                break
+            }
+        }
+
+        for (range(chars.length()-1, -1), j, char_index) {
+            const char = chars[char_index]
+            if (is_digit(char)) {
+                last_digit = char
+                break
+            }
+        }
+
+        const calibration = number(f"${first_digit}${last_digit}")
+        calibrations.append(calibration)
+    }
+
+    return calibrations.reduce((a, b) => a + b)
+}
+
+const answer = () => get_calibration_sum(input)
