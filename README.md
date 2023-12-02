@@ -1,4 +1,4 @@
-This is the Advent of Code 2022 - solved using the [Vortex](https://github.com/dibsonthis/Vortex) programming language.
+This is the Advent of Code 2023 - solved using the [Vortex](https://github.com/dibsonthis/Vortex) programming language.
 
 To get the Vortex environment set up, run the below code:
 
