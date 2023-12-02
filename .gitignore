@@ -1,3 +1,4 @@
 # Ignore interpreter and modules dir
 vortex
 modules/
+.DS_Store
