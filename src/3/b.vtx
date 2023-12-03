@@ -1,0 +1,96 @@
+import io
+import [] : string
+import [] : functional
+import [is_digit] : "../utils/helpers"
+
+const input = io.readf("input.txt").split("\n")
+
+const get_value = (ls, x_pos, y_pos) => {
+    var row_val = ls[y_pos]
+    if (row_val == None) {
+        return 0
+    }
+
+    var val = row_val[x_pos]
+    if (val == None) {
+        return 0
+    }
+    
+    return val
+}
+
+var gear_map = {}
+
+var nums = []
+var num_map = {}
+
+var num_id = 1
+
+for (input, y, row) {
+    var num = ""
+    var is_part = false
+    for (row.chars(), x, char) {
+
+        var surrounding = []
+
+        if (char.is_digit()) {
+
+            var top = input.get_value(x, y-1)
+            var bottom = input.get_value(x, y+1)
+            var left = input.get_value(x-1, y)
+            var right = input.get_value(x+1, y)
+            var top_left = input.get_value(x-1, y-1)
+            var top_right = input.get_value(x+1, y-1)
+            var bottom_left = input.get_value(x-1, y+1)
+            var bottom_right = input.get_value(x+1, y+1)
+
+            surrounding = [
+                [top, x, y-1],
+                [bottom, x, y+1],
+                [left, x-1, y],
+                [right, x+1, y],
+                [top_left, x-1, y-1],
+                [top_right, x+1, y-1],
+                [bottom_left, x-1, y+1],
+                [bottom_right, x+1, y+1],
+            ]
+            
+            if (!is_part) {
+                surrounding.forEach((e) => {
+                    if (!e[0].is_digit() and e[0] != ".") {
+                        surrounding.forEach((e) => {
+                            if (!e[0].is_digit() and e[0] != ".") {
+                                if (e[0] == "*") {
+                                    if (gear_map[f"${e[1]}:${e[2]}"] != None) {
+                                        gear_map[f"${e[1]}:${e[2]}"].append(num_id)
+                                    } else {
+                                        gear_map[f"${e[1]}:${e[2]}"] = [num_id]
+                                    }
+                                }
+                                is_part = true
+                            }
+                        })
+                        is_part = true
+                    }
+                })
+            }
+        }
+
+        if (is_digit(char)) {
+            num += char
+        } else {
+            if (num != "" and is_part) {
+                nums.append(num.number())
+                num_map[f"${num_id}"] = num.number()
+                num_id += 1
+            }
+            num = ""
+            is_part = false
+        }
+    }
+}
+
+const answer = () => gear_map.info().values
+            .filter((e) => e.length() == 2)
+            .map((e) => num_map[string(e[0])] * num_map[string(e[1])])
+            .reduce((a, b) => a + b)

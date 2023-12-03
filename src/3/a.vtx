@@ -1,0 +1,63 @@
+import io
+import [] : string
+import [] : functional
+import [is_digit] : "../utils/helpers"
+
+const input = io.readf("input.txt").split("\n")
+
+const get_value = (ls, x_pos, y_pos) => {
+    var row_val = ls[y_pos]
+    if (row_val == None) {
+        return 0
+    }
+
+    var val = row_val[x_pos]
+    if (val == None) {
+        return 0
+    }
+    
+    return val
+}
+
+var nums = []
+
+for (input, y, row) {
+    var num = ""
+    var is_part = false
+    for (row.chars(), x, char) {
+
+        if (char.is_digit()) {
+
+            var top = input.get_value(x, y-1)
+            var bottom = input.get_value(x, y+1)
+            var left = input.get_value(x-1, y)
+            var right = input.get_value(x+1, y)
+            var top_left = input.get_value(x-1, y-1)
+            var top_right = input.get_value(x+1, y-1)
+            var bottom_left = input.get_value(x-1, y+1)
+            var bottom_right = input.get_value(x+1, y+1)
+
+            const surrounding = [top, bottom, left, right, top_left, top_right, bottom_left, bottom_right]
+            
+            if (!is_part) {
+                surrounding.forEach((e) => {
+                    if (!e.is_digit() and e != ".") {
+                        is_part = true
+                    }
+                })
+            }
+        }
+
+        if (is_digit(char)) {
+            num += char
+        } else {
+            if (num != "" and is_part) {
+                nums.append(num.number())
+            }
+            num = ""
+            is_part = false
+        }
+    }
+}
+
+const answer = () => nums.reduce((a, b) => a + b)
