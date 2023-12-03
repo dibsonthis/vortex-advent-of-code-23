@@ -19,45 +19,50 @@ const get_value = (ls, x_pos, y_pos) => {
     return val
 }
 
-var nums = []
+const get_total = (input) => {
 
-for (input, y, row) {
-    var num = ""
-    var is_part = false
-    for (row.chars(), x, char) {
+    var nums = []
 
-        if (char.is_digit()) {
+    for (input, y, row) {
+        var num = ""
+        var is_part = false
+        for (row.chars(), x, char) {
 
-            var top = input.get_value(x, y-1)
-            var bottom = input.get_value(x, y+1)
-            var left = input.get_value(x-1, y)
-            var right = input.get_value(x+1, y)
-            var top_left = input.get_value(x-1, y-1)
-            var top_right = input.get_value(x+1, y-1)
-            var bottom_left = input.get_value(x-1, y+1)
-            var bottom_right = input.get_value(x+1, y+1)
+            if (char.is_digit()) {
 
-            const surrounding = [top, bottom, left, right, top_left, top_right, bottom_left, bottom_right]
-            
-            if (!is_part) {
-                surrounding.forEach((e) => {
-                    if (!e.is_digit() and e != ".") {
-                        is_part = true
-                    }
-                })
+                var top = input.get_value(x, y-1)
+                var bottom = input.get_value(x, y+1)
+                var left = input.get_value(x-1, y)
+                var right = input.get_value(x+1, y)
+                var top_left = input.get_value(x-1, y-1)
+                var top_right = input.get_value(x+1, y-1)
+                var bottom_left = input.get_value(x-1, y+1)
+                var bottom_right = input.get_value(x+1, y+1)
+
+                const surrounding = [top, bottom, left, right, top_left, top_right, bottom_left, bottom_right]
+                
+                if (!is_part) {
+                    surrounding.forEach((e) => {
+                        if (!e.is_digit() and e != ".") {
+                            is_part = true
+                        }
+                    })
+                }
             }
-        }
 
-        if (is_digit(char)) {
-            num += char
-        } else {
-            if (num != "" and is_part) {
-                nums.append(num.number())
+            if (is_digit(char)) {
+                num += char
+            } else {
+                if (num != "" and is_part) {
+                    nums.append(num.number())
+                }
+                num = ""
+                is_part = false
             }
-            num = ""
-            is_part = false
         }
     }
+
+    return nums.reduce((a, b) => a + b)
 }
 
-const answer = () => nums.reduce((a, b) => a + b)
+const answer = () => get_total(input)
