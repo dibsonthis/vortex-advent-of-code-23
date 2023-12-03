@@ -1,0 +1,58 @@
+import io
+import [] : string
+import [] : functional
+
+const input = io.readf("input.txt").split("\n")
+
+const MAX_RED = 12
+const MAX_GREEN = 13
+const MAX_BLUE = 14
+
+const calculate_game_possibilites = (input) => {
+
+    return input.map((game) => {
+        const split_input = game.split(":")
+        const id = split_input[0].split().last()
+        const sets = split_input[1]
+                        .split(";")
+                        .map((set) => set.split(",")
+                                        .map((set) => set.trim()
+                                                        .split(" ")))
+
+        var possible = true
+
+        sets.forEach((set) => {
+            var red = 0
+            var green = 0
+            var blue = 0
+            set.forEach((e) => {
+                if (e[1] == "red") {
+                    red += number(e[0])
+                } else if (e[1] == "green") {
+                    green += number(e[0])
+                } else if (e[1] == "blue") {
+                    blue += number(e[0])
+                }
+            })
+
+            if (red > MAX_RED or green > MAX_GREEN or blue > MAX_BLUE) {
+                possible = false
+            }
+        })
+
+        return {
+            id: number(id),
+            possible: possible
+        }
+    })
+}
+
+const answer = () => calculate_game_possibilites(input)
+            .filter((e) => e.possible)
+            .reduce((a, b) => {
+                if (type(a) == "Object") {
+                    return a.id + b.id
+                }
+
+                return a + b.id
+            })

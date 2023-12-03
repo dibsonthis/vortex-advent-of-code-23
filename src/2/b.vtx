@@ -1,0 +1,62 @@
+import io
+import [] : string
+import [] : functional
+
+const input = io.readf("input.txt").split("\n")
+
+const calculate_game_possibilites = (input) => {
+
+    return input.map((game) => {
+        const split_input = game.split(":")
+        const id = split_input[0].split().last()
+        const sets = split_input[1]
+                        .split(";")
+                        .map((set) => set.split(",")
+                                        .map((set) => set.trim()
+                                                        .split(" ")))
+
+        var highest_red = 0
+        var highest_green = 0
+        var highest_blue = 0
+
+        sets.forEach((set) => {
+            var red = 0
+            var green = 0
+            var blue = 0
+            set.forEach((e) => {
+                if (e[1] == "red") {
+                    red += number(e[0])
+                } else if (e[1] == "green") {
+                    green += number(e[0])
+                } else if (e[1] == "blue") {
+                    blue += number(e[0])
+                }
+            })
+
+            if (red > highest_red) {
+                highest_red = red
+            }
+
+            if (green > highest_green) {
+                highest_green = green
+            }
+
+            if (blue > highest_blue) {
+                highest_blue = blue
+            }
+        })
+
+        return {
+            id: number(id),
+            power: highest_red * highest_green * highest_blue
+        }
+    })
+}
+
+const answer = () => calculate_game_possibilites(input).reduce((a, b) => {
+    if (a.type() == "Object") {
+        return a.power + b.power
+    }
+
+    return a + b.power
+})
