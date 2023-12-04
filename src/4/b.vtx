@@ -1,0 +1,60 @@
+import io
+import [] : string
+import [] : functional
+import [is_digit] : "../utils/helpers"
+
+const input = io.readf("input.txt").split("\n")
+
+const get_total = (input) => {
+
+    var game_instances = {}
+    var game_points = {}
+
+    for (1..input.length() + 1, _, i) {
+        game_instances[f"${i}"] = 1
+    }
+
+    var total = 0
+
+    input.forEach((row, index) => {
+
+        var card_total = 0
+
+        const split_row = row.split(":")
+        const nums = split_row[1].split("|")
+        const winning_nums = nums[0].split().filter((num) => num != "").map((num) => number(num))
+        const my_nums = nums[1].split().filter((num) => num != "").map((num) => number(num))
+
+        var winning_nums_dict = {}
+
+        for (winning_nums, _, num) {
+            winning_nums_dict[f"${num}"] = 0
+        }
+
+        for (my_nums, _, num) {
+            if (winning_nums_dict[f"${num}"] != None) {
+                card_total += 1
+            }
+        }
+
+        game_points[f"${index + 1}"] = card_total
+    })
+
+    for (game_instances.info().keys, index, key) {
+        const game_id = index + 1
+        const game_points = game_points[key]
+
+        if (game_points > 0) {
+            for (1..(game_points+1), _, i) {
+                const index_str = f"${game_id + i}"
+                if (game_instances[index_str] != None) {
+                    game_instances[index_str] += game_instances[key]
+                }
+            }
+        }
+    }
+
+    return game_instances.info().values.reduce((a, b) => a + b)
+}
+
+const answer = () => get_total(input)

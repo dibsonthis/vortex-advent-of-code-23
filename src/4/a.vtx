@@ -1,0 +1,43 @@
+import io
+import [] : string
+import [] : functional
+import [is_digit] : "../utils/helpers"
+
+const input = io.readf("input.txt").split("\n")
+
+const get_total = (input) => {
+
+    var total = 0
+
+    input.forEach((row) => {
+
+        var card_total = 0
+
+        const split_row = row.split(":")
+        const nums = split_row[1].split("|")
+        const winning_nums = nums[0].split().filter((num) => num != "").map((num) => number(num))
+        const my_nums = nums[1].split().filter((num) => num != "").map((num) => number(num))
+
+        var winning_nums_dict = {}
+
+        for (winning_nums, _, num) {
+            winning_nums_dict[f"${num}"] = 0
+        }
+
+        for (my_nums, _, num) {
+            if (winning_nums_dict[f"${num}"] != None) {
+                if (card_total == 0) {
+                    card_total += 1
+                } else {
+                    card_total = card_total * 2
+                }
+            }
+        }
+
+        total += card_total
+    })
+
+    return total
+}
+
+const answer = () => get_total(input)
